@@ -6,7 +6,13 @@ set(gravity_sources
     main.cpp
 )
 
-set(gravit_resources
+set(gravity_resources
+    ${res}/map-20kdm2.pk3
+)
+SET_SOURCE_FILES_PROPERTIES(
+    ${gravity_resources}
+    PROPERTIES
+    MACOSX_PACKAGE_LOCATION Resources
 )
 
 include_directories( ${OpenCV_INCLUDE_DIRS} )
@@ -15,7 +21,7 @@ add_executable(
     gravity
     MACOSX_BUNDLE
     ${gravity_sources}
-    ${gravit_resources}
+    ${gravity_resources}
 )
 
 target_link_libraries(gravity

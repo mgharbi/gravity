@@ -2,6 +2,15 @@
 #include <irrlicht.h>
 
 #include "GREventHandler.h"
+#include "GRResourceLoader.h"
+#include <boost/filesystem.hpp>
+
+#include <iostream>
+
+using std::cout;
+using std::endl;
+
+namespace fs = boost::filesystem;
 
 using namespace irr;
 
@@ -27,16 +36,30 @@ int main()
     if (!device)
         return EXIT_FAILURE;
 
-    device->setWindowCaption(L"Hello World! - Irrlicht Engine Demo");
+    device->setWindowCaption(L"Gravity");
+
 
     IVideoDriver* driver    = device->getVideoDriver();
     ISceneManager* smgr     = device->getSceneManager();
     IGUIEnvironment* guienv = device->getGUIEnvironment();
 
-    guienv->addStaticText(L"Hello World! This is the Irrlicht Software renderer!",
-            rect<s32>(10,10,260,22), true);
+    fs::path map_path = get_resource_path("map-20kdm2.pk3");
+    device->getFileSystem()->addFileArchive("../../media/map-20kdm2.pk3");
 
-    smgr->addCameraSceneNode(0, vector3df(0,30,-40), vector3df(0,5,0));
+    scene::IAnimatedMesh* mesh = smgr->getMesh("20kdm2.bsp");
+    scene::ISceneNode* node = 0;
+
+    if (mesh)
+        node = smgr->addOctreeSceneNode(mesh->getMesh(0), 0, -1, 1024);
+
+    if (node)
+            node->setPosition(core::vector3df(-1300,-144,-1249));
+
+    smgr->addCameraSceneNodeFPS();
+
+    device->getCursorControl()->setVisible(false);
+
+    int lastFPS = -1;
 
     while(device->run())
     {
@@ -44,13 +67,28 @@ int main()
             printf("out\n");
             break;
         }
+        if (device->isWindowActive())
+        {
+            driver->beginScene(true, true, video::SColor(255,200,200,200));
+            smgr->drawAll();
+            driver->endScene();
 
-        driver->beginScene(true, true, SColor(255,100,101,140));
+            int fps = driver->getFPS();
 
-        smgr->drawAll();
-        guienv->drawAll();
+            if (lastFPS != fps)
+            {
+                core::stringw str = L"Irrlicht Engine - Quake 3 Map example [";
+                str += driver->getName();
+                str += "] FPS:";
+                str += fps;
 
-        driver->endScene();
+                device->setWindowCaption(str.c_str());
+                lastFPS = fps;
+            }
+        }
+        else
+            device->yield();
+
     }
 
     device->closeDevice();

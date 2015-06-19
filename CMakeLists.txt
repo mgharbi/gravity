@@ -39,6 +39,7 @@ set(src "${CMAKE_CURRENT_SOURCE_DIR}/src")
 set(bin "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 set(lib "${CMAKE_CURRENT_SOURCE_DIR}/lib")
 set(inc "${CMAKE_CURRENT_SOURCE_DIR}/include")
+set(res "${CMAKE_CURRENT_SOURCE_DIR}/assets")
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${lib})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${lib})
