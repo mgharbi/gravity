@@ -1,0 +1,12 @@
+bin/**
+build/**
+macbuild/**
+data/**
+lib/**
+output/**
+thirdparty/**
+
+!.gitkeep
+.DS_Store
+*.pyc
+tags
