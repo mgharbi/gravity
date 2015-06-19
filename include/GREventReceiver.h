@@ -1,3 +1,14 @@
+/* -----------------------------------------------------------------
+ * File:    GREventReceiver.h
+ * Author:  Michael Gharbi <gharbi@mit.edu>
+ * Created: 2015-06-19
+ * -----------------------------------------------------------------
+ * 
+ * 
+ * 
+ * ---------------------------------------------------------------*/
+
+
 #ifndef GREVENTHANDLER_H_MN0GITF1
 #define GREVENTHANDLER_H_MN0GITF1
 
@@ -12,7 +23,8 @@ using namespace io;
 using namespace gui;
 
 
-class MyEventReceiver : public IEventReceiver
+namespace gr{
+class GREventReceiver : public IEventReceiver
 {
 public:
     // This is the one method that we have to implement
@@ -31,7 +43,7 @@ public:
         return KeyIsDown[keyCode];
     }
     
-    MyEventReceiver()
+    GREventReceiver()
     {
         for (u32 i=0; i<KEY_KEY_CODES_COUNT; ++i)
             KeyIsDown[i] = false;
@@ -42,5 +54,6 @@ private:
     bool KeyIsDown[KEY_KEY_CODES_COUNT];
 };
 
+} // namespace gr
 #endif /* end of include guard: GREVENTHANDLER_H_MN0GITF1 */
 

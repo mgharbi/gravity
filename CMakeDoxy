@@ -1,0 +1,28 @@
+With Doxygen, we have at hand a solid and widely-known open-source solution for the generation of API documentation. However, it is quite inconvenient when one has to use yet another tool as part of the daily hacking. So today, I looked into how I can integrate the generation of API documentation with my CMake workflow. Because I found no easy how-to on the web, I’m putting up one now.
+
+The base situation is like this: In your source tree is somewhere a Doxyfile, which you previously used to generate documentation by running doxygen in this directory. Rename this file to “Doxyfile.in” and change the line that looks like
+
+INPUT = ../src/
+
+into
+
+INPUT = @CMAKE_CURRENT_SOURCE_DIR@/../src/
+
+(Of course, substitute “../src/” by what’s actually in there.) Now add the following to the CMakeLists.txt of this directory:
+
+# add a target to generate API documentation with Doxygen
+find_package(Doxygen)
+if(DOXYGEN_FOUND)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
+add_custom_target(doc
+${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
+WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+COMMENT "Generating API documentation with Doxygen" VERBATIM
+)
+endif(DOXYGEN_FOUND)
+
+after another CMake run, you can type “make doc” to have CMake run Doxygen. To keep the source tree clean in out-of-source builds, the documentation is generated in the corresponding build directory. If that is too well hidden for you, exchange “CMAKE_CURRENT_SOURCE_DIR” for “CMAKE_CURRENT_BINARY_DIR” in the line starting with “WORKING_DIRECTORY”. The documentation will then be generated in the source directory again.
+
+Installing the generated documentation is left as an exercise to the reader.
+
+Update: I forgot to add one thing. With the above code, the target will not be included in the “all” target. That is, it will not be generated when you type “make”. You have to say “make doc” explicitly. If you want to include it in “make”, add the word “ALL” after “add_custom_target(doc”.

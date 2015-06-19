@@ -2,7 +2,7 @@
 #include <irrlicht.h>
 #include <boost/filesystem.hpp>
 
-#include "GREventHandler.h"
+#include "GREventReceiver.h"
 #include "GRInitScene.h"
 
 #include <iostream>
@@ -22,7 +22,7 @@ using namespace gui;
 
 int main()
 {
-    MyEventReceiver receiver;
+    gr::GREventReceiver receiver;
 
     SIrrlichtCreationParameters params;
     params.AntiAlias       = 8;
@@ -30,6 +30,7 @@ int main()
     params.DriverType      = video::EDT_OPENGL;
     params.Vsync           = false;
     params.Fullscreen      = false;
+    params.Stencilbuffer               = false;
     params.EventReceiver   = &receiver;
     params.WindowSize = core::dimension2du(480,640);
     IrrlichtDevice *device = createDeviceEx(params);
@@ -42,6 +43,9 @@ int main()
     IVideoDriver* driver    = device->getVideoDriver();
     ISceneManager* smgr     = device->getSceneManager();
     IGUIEnvironment* guienv = device->getGUIEnvironment();
+
+    guienv->addStaticText(L"Running Gravity Game",
+            rect<s32>(10,10,360,62), false);
 
     gr::initialize_scene(device);
 

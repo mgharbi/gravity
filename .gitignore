@@ -5,6 +5,7 @@ data/**
 lib/**
 output/**
 thirdparty/**
+doc/**
 
 !.gitkeep
 .DS_Store
