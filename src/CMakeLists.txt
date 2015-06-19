@@ -10,6 +10,7 @@ set(gravity_sources
 
 set(gravity_resources
     ${res}/spaceship.zip
+    ${res}/Earth.zip
 )
 
 SET_SOURCE_FILES_PROPERTIES(
