@@ -44,7 +44,7 @@ int main()
     IGUIEnvironment* guienv = device->getGUIEnvironment();
 
     fs::path map_path = get_resource_path("map-20kdm2.pk3");
-    device->getFileSystem()->addFileArchive("../../media/map-20kdm2.pk3");
+    device->getFileSystem()->addFileArchive(map_path.c_str());
 
     scene::IAnimatedMesh* mesh = smgr->getMesh("20kdm2.bsp");
     scene::ISceneNode* node = 0;
