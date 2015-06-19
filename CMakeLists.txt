@@ -24,6 +24,7 @@ find_package(Boost COMPONENTS
 )
 FIND_PACKAGE(OpenGL)
 find_package(Irrlicht REQUIRED)
+find_package(bullet REQUIRED)
 
 FIND_LIBRARY(COCOA_LIBRARY Cocoa)
 FIND_LIBRARY(IOKIT_LIBRARY IOKit)

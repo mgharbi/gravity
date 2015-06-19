@@ -43,17 +43,17 @@ int main()
     ISceneManager* smgr     = device->getSceneManager();
     IGUIEnvironment* guienv = device->getGUIEnvironment();
 
-    fs::path map_path = get_resource_path("map-20kdm2.pk3");
-    device->getFileSystem()->addFileArchive(map_path.c_str());
+    fs::path spaceship_path = get_resource_path("spaceship.zip");
 
-    scene::IAnimatedMesh* mesh = smgr->getMesh("20kdm2.bsp");
-    scene::ISceneNode* node = 0;
+    device->getFileSystem()->addFileArchive(spaceship_path.c_str());
 
-    if (mesh)
-        node = smgr->addOctreeSceneNode(mesh->getMesh(0), 0, -1, 1024);
+    scene::IMeshSceneNode* node = smgr->addMeshSceneNode(smgr->getMesh("spaceship.obj"),0,-1,core::vector3df(0.0f,0.0f,0.0f),
+            core::vector3df(0.f,0.f,0.f),core::vector3df(.1f,.1f,.1f));
 
-    if (node)
-            node->setPosition(core::vector3df(-1300,-144,-1249));
+    node->setMaterialFlag(video::EMF_LIGHTING, true);
+
+    smgr->setAmbientLight(video::SColorf(0.3,0.3,0.3,1));
+    ILightSceneNode* light1 = smgr->addLightSceneNode( 0, core::vector3df(0,0,100), video::SColorf(0.3f,0.3f,0.3f), 100.0f, 1 ); 
 
     smgr->addCameraSceneNodeFPS();
 
@@ -86,8 +86,9 @@ int main()
                 lastFPS = fps;
             }
         }
-        else
+        else {
             device->yield();
+        }
 
     }
 
