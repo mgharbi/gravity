@@ -1,6 +1,7 @@
 include_directories(${inc})
 
 INCLUDE_DIRECTORIES(${IRRLICHT_INCLUDE_DIR} ${OPENGL_INCLUDE_DIR})
+include_directories(${Boost_INCLUDE_DIR})
 
 set(gravity_sources
     main.cpp
