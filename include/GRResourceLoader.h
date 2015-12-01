@@ -1,3 +1,14 @@
+/* -----------------------------------------------------------------
+ * File:    GRResourceLoader.h
+ * Author:  Michael Gharbi <gharbi@mit.edu>
+ * Created: 2015-06-19
+ * -----------------------------------------------------------------
+ * 
+ * 
+ * 
+ * ---------------------------------------------------------------*/
+
+
 #ifndef GRRESOURCELOADER_H_7HLOFN8M
 #define GRRESOURCELOADER_H_7HLOFN8M
 
@@ -8,6 +19,7 @@
 
 namespace fs = boost::filesystem;
 
+namespace gr {
 
 fs::path get_resource_path(std::string filename, std::string extension = "", fs::path prefix = "") {
     CFStringRef fname  = CFStringCreateWithCString(kCFAllocatorDefault, filename.c_str(), kCFStringEncodingUTF8);
@@ -39,6 +51,7 @@ fs::path get_resource_path(std::string filename, std::string extension = "", fs:
     return fs::path(buffer);
 }
 
+} // namespace gr
 
 
 #endif /* end of include guard: GRRESOURCELOADER_H_7HLOFN8M */
