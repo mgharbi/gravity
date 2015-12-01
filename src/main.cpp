@@ -5,6 +5,8 @@
 #include "GREventHandler.h"
 #include "GRInitScene.h"
 
+#include <btBulletDynamicsCommon.h>
+
 #include <iostream>
 
 using std::cout;
@@ -42,6 +44,10 @@ int main()
     IVideoDriver* driver    = device->getVideoDriver();
     ISceneManager* smgr     = device->getSceneManager();
     IGUIEnvironment* guienv = device->getGUIEnvironment();
+
+    btBroadphaseInterface* broadphase = new btDbvtBroadphase();
+    btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
+    btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfiguration);
 
     gr::initialize_scene(device);
 
